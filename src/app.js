@@ -47,8 +47,8 @@ export const getTotal = (items = [], discount = 0) => {
 
 /**
  * Подсчёт суммы значений пользователей
- * @param {string} name
- * @returns {boolean}
+ * @param {{[key: string]: number}} obj
+ * @returns {number}
  */
 export const getScore = (obj) =>
   Object.values(obj).reduce(
