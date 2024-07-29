@@ -44,3 +44,14 @@ export const getTotal = (items = [], discount = 0) => {
   }, 0);
   return total - (total * discount) / 100;
 };
+
+/**
+ * Подсчёт суммы значений пользователей
+ * @param {{[key: string]: number}} obj
+ * @returns {number}
+ */
+export const getScore = (obj) =>
+  Object.values(obj).reduce(
+    (accumulator, currentValue) => accumulator + currentValue,
+    0
+  );
