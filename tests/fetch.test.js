@@ -6,6 +6,9 @@ describe('check GET /BookStore/v1/Books', () => {
       expect(res.status).toEqual(200);
       expect(Array.isArray(data.books)).toBe(true);
       expect(data.books.length).toBeGreaterThan(0);
+      ['isbn', 'title', 'subTitle', 'author', 'publish_date', 'publisher', 'pages', 'description', 'website'].map((item) => {
+        expect(data.books[0]).toHaveProperty(item);
+      })
     };
     getBooks()
   })
