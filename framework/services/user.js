@@ -3,24 +3,36 @@ import { API_URLS, BASE_HOST } from '../../src/constants/urls'
 import { USER } from '../config/user'
 
 export const user = {
-  async createUser() {
+  async createUser(payload = USER) {
     return await supertest(BASE_HOST)
       .post(API_URLS.createUser)
       .set('Content-Type', 'application/json')
-      .send(USER)
+      .send(payload)
   },
 
-  async getToken() {
+  async getToken(payload = USER) {
     return await supertest(BASE_HOST)
       .post(API_URLS.getToken)
       .set('Content-Type', 'application/json')
-      .send(USER)
+      .send(payload)
   },
 
-  async getUser(payload = USER) {
+  async setAuthUser(payload = USER) {
     return await supertest(BASE_HOST)
-      .post(API_URLS.getUser)
+      .post(API_URLS.setAuthUser)
       .set('Content-Type', 'application/json')
       .send(payload)
+  },
+
+  async deleteUser(token = '') {
+    return await supertest(BASE_HOST)
+      .delete(API_URLS.deleteUser(USER.userName))
+      .send({token})
+  },
+
+  async getInfoUser(token = '') {
+    return await supertest(BASE_HOST)
+      .get(API_URLS.getInfoUser(USER.userName))
+      .send({token})
   }
 }

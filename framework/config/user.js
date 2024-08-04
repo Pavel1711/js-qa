@@ -1,9 +1,14 @@
 export const USER = {
     userName: 'Pavel',
-    password: 123
+    password: 'Pavel_Kochura00!'
 }
 
-export const UNCORRECT_USER = {
-    userName: '',
-    password: null
+export const ALWAYS_NEW_USER = {
+    userName: `Pavel_${new Date().getTime()}`,
+    password: 'Pavel_Kochura00!'
+}
+
+export const UNCORRECT_PASSWORD_FOR_USER = {
+    userName: `Pavel_${new Date().getTime()}`,
+    password: '123'
 }

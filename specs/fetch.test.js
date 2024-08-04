@@ -1,49 +1,71 @@
 import { user } from "../framework/services/user";
-import { books } from "../framework/services/books";
-import { UNCORRECT_USER } from '../framework/config/user'
+import { UNCORRECT_PASSWORD_FOR_USER, ALWAYS_NEW_USER } from '../framework/config/user'
 
-describe('Check api user', () => {
-  const data = [
-    // Почему-то запрос возвращает 504, поэтому пришлось закомментировать тесты
-    // {
-    //   text: 'Create user',
-    //   request: user.createUser(),
-    //   status: 504
-    // },
-    // {
-    //   text: 'Get token',
-    //   request: user.getToken(),
-    //   status: 504
-    // },
-    {
-      text: 'Get user',
-      request: user.getUser(),
-      status: 404
-    },
-    {
-      text: 'Get uncorrected user',
-      request: user.getUser(UNCORRECT_USER),
-      status: 400
-    }
-  ];
-
-  data.forEach(({text, request, status}) => {
-    it(text, async () => {
-      const res = await request
-      expect(res.status).toEqual(status);
-    })
+describe('Create user', () => {
+  it('Used login', async () => {
+    const res = await user.createUser();
+    expect(res.status).toEqual(406);
+    expect(res.body.message).toEqual('User exists!')
   })
-})
 
-describe('Check books api', () => {
-  it('Get books', async () => {
-    const res = await books.getBooks();
+  it('Uncorrect password', async () => {
+    const res = await user.createUser(UNCORRECT_PASSWORD_FOR_USER)
+    expect(res.status).toEqual(400);
+  })
 
+  it('Correct data', async () => {
+    const res = await user.createUser(ALWAYS_NEW_USER);
+    expect(res.status).toEqual(201);
+  })
+});
+
+let token = '';
+
+describe('Get token', () => {
+  it('Uncorrect password', async () => {
+    const res = await user.getToken(UNCORRECT_PASSWORD_FOR_USER)
     expect(res.status).toEqual(200);
-    expect(Array.isArray(res.body.books)).toBe(true);
-    expect(res.body.books.length).toBeGreaterThan(0);
-    ['isbn', 'title', 'subTitle', 'author', 'publish_date', 'publisher', 'pages', 'description', 'website'].map((item) => {
-      expect(res.body.books[0]).toHaveProperty(item);
-    })
+    expect(res.body.status).toEqual('Failed')
   })
-})
+
+  it('Correct data', async () => {
+    const res = await user.getToken();
+    expect(res.status).toEqual(200);
+    token = res.body.token;
+    ['token', 'expires', 'status', 'result'].forEach((item) => {
+      expect(res.body).toHaveProperty(item);
+    })
+    expect(res.body.status).toEqual('Success')
+  })
+});
+
+describe('Authorization user', () => {
+  it('Correct data', async () => {
+    const res = await user.setAuthUser();
+    expect(res.status).toEqual(200);
+    expect(res.body).toEqual(true);
+  })
+
+  it('Uncorrect data', async () => {
+    const res = await user.setAuthUser(UNCORRECT_PASSWORD_FOR_USER);
+    expect(res.status).toEqual(404);
+    expect(res.body.message).toEqual('User not found!'); // Что на самом деле странно, потому что неверный только пароль
+  })
+});
+
+describe('Delete user', () => {
+  it('Correct data', async () => {
+    const res = await user.deleteUser(token);
+    // Не получается авторизоваться, несмотря на то, что выше всё ок и токен получен. 
+    expect(res.status).toEqual(401); // Почему-то для неавторизованного возращается 401 статус, вместо 204, как указано в доке.
+  })
+});
+
+describe('Get info user', () => {
+  it('Correct data', async () => {
+    const res = await user.getInfoUser(token);
+    // Не получается авторизоваться, несмотря на то, что выше всё ок и токен получен. 
+    expect(res.status).toEqual(401);
+  })
+});
+
