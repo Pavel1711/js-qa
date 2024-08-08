@@ -24,15 +24,15 @@ export const user = {
       .send(payload)
   },
 
-  async deleteUser(token = '') {
+  async deleteUser(userId, token) {
     return await supertest(BASE_HOST)
-      .delete(API_URLS.deleteUser(USER.userName))
-      .send({token})
+      .delete(API_URLS.deleteUser(userId))
+      .set('Authorization', `Bearer ${token}`)
   },
 
-  async getInfoUser(token = '') {
+  async getInfoUser(userId, token) {
     return await supertest(BASE_HOST)
-      .get(API_URLS.getInfoUser(USER.userName))
-      .send({token})
+      .get(API_URLS.getInfoUser(userId))
+      .set('Authorization', `Bearer ${token}`)
   }
 }
