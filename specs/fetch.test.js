@@ -75,11 +75,13 @@ describe('Get books', () => {
 
 describe('Create books', () => {
   it('Correct data', async () => {
-    const data = {userId, collectionOfIsbns: [
-      {
-        isbn
-      }
-    ]};
+    const data = {
+      userId, collectionOfIsbns: [
+        {
+          isbn
+        }
+      ]
+    };
     const res = await books.createBook(data, token);
     expect(res.status).toEqual(201);
   })
@@ -104,6 +106,17 @@ describe('Get book', () => {
       expect(res.body).toHaveProperty(item);
     })
     expect(res.status).toEqual(200);
+  })
+});
+
+describe('Delete book', () => {
+  it('Correct data', async () => {
+    const data = {
+      isbn,
+      userId
+    }
+    const res = await books.deleteBook(data, token);
+    expect(res.status).toEqual(204);
   })
 });
 

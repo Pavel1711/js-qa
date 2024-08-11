@@ -28,5 +28,13 @@ export const books = {
     return await supertest(BASE_HOST)
       .get(API_URLS.getBooks)
       .set('Content-Type', 'application/json')
+  },
+
+  async deleteBook(data, token) {
+    return await supertest(BASE_HOST)
+      .delete(API_URLS.deleteBook)
+      .set('Content-Type', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
+      .send(data)
   }
 }

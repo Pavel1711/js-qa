@@ -9,5 +9,6 @@ export const API_URLS = {
   createBooks: '/BookStore/v1/Books/',
   updateBook: (isbn) => `/BookStore/v1/Books/${isbn}/`,
   getBook: (isbn) => `/BookStore/v1/Book/?ISBN=${isbn}`,
-  getBooks: '/BookStore/v1/Books/'
+  getBooks: '/BookStore/v1/Books/',
+  deleteBook: '/BookStore/v1/Book/',
 }
