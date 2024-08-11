@@ -6,5 +6,8 @@ export const API_URLS = {
   setAuthUser: '/Account/v1/Authorized/',
   deleteUser: (userId) => `/Account/v1/User/${userId}/`,
   getInfoUser: (userId) => `/Account/v1/User/${userId}/`,
+  createBooks: '/BookStore/v1/Books/',
+  updateBook: (isbn) => `/BookStore/v1/Books/${isbn}/`,
+  getBook: (isbn) => `/BookStore/v1/Book/?ISBN=${isbn}`,
   getBooks: '/BookStore/v1/Books/'
 }

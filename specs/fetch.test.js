@@ -1,5 +1,6 @@
 import { user } from "../framework/services/user";
 import { UNCORRECT_PASSWORD_FOR_USER, ALWAYS_NEW_USER } from '../framework/config/user'
+import { books } from "../framework/services/books";
 
 let userId = '';
 let token = '';
@@ -58,6 +59,50 @@ describe('Authorization user', () => {
 describe('Get info user', () => {
   it('Correct data', async () => {
     const res = await user.getInfoUser(userId, token);
+    expect(res.status).toEqual(200);
+  })
+});
+
+let isbn = '';
+
+describe('Get books', () => {
+  it('Correct data', async () => {
+    const res = await books.getBooks();
+    isbn = res.body.books[0].isbn;
+    expect(res.status).toEqual(200);
+  })
+});
+
+describe('Create books', () => {
+  it('Correct data', async () => {
+    const data = {userId, collectionOfIsbns: [
+      {
+        isbn
+      }
+    ]};
+    const res = await books.createBook(data, token);
+    expect(res.status).toEqual(201);
+  })
+});
+
+describe('Update book', () => {
+  it('Correct data', async () => {
+    const data = {
+      userId,
+      isbn,
+      title: 'Book1 update'
+    };
+    const res = await books.updateBook(isbn, data, token);
+    expect(res.status).toEqual(200);
+  })
+});
+
+describe('Get book', () => {
+  it('Correct data', async () => {
+    const res = await books.getBook(isbn);
+    ['isbn', 'title', 'subTitle', 'author', 'publish_date', 'publisher', 'pages', 'description', 'website'].forEach((item) => {
+      expect(res.body).toHaveProperty(item);
+    })
     expect(res.status).toEqual(200);
   })
 });
