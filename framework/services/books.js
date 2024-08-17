@@ -10,9 +10,9 @@ export const books = {
       .send(data)
   },
 
-  async updateBook(isbn, data, token) {
+  async updateBook(fromIsbn, data, token) {
     return await supertest(BASE_HOST)
-      .put(API_URLS.updateBook(isbn))
+      .put(API_URLS.updateBook(fromIsbn))
       .set('Content-Type', 'application/json')
       .set('Authorization', `Bearer ${token}`)
       .send(data)

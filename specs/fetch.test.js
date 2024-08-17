@@ -64,11 +64,13 @@ describe('Get info user', () => {
 });
 
 let isbn = '';
+let secondIsbn = '';
 
 describe('Get books', () => {
   it('Correct data', async () => {
     const res = await books.getBooks();
     isbn = res.body.books[0].isbn;
+    secondIsbn = res.body.books[1].isbn;
     expect(res.status).toEqual(200);
   })
 });
@@ -91,8 +93,7 @@ describe('Update book', () => {
   it('Correct data', async () => {
     const data = {
       userId,
-      isbn,
-      title: 'Book1 update'
+      isbn: secondIsbn
     };
     const res = await books.updateBook(isbn, data, token);
     expect(res.status).toEqual(200);
@@ -112,7 +113,7 @@ describe('Get book', () => {
 describe('Delete book', () => {
   it('Correct data', async () => {
     const data = {
-      isbn,
+      isbn: secondIsbn,
       userId
     }
     const res = await books.deleteBook(data, token);

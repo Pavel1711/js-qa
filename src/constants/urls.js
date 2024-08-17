@@ -7,7 +7,7 @@ export const API_URLS = {
   deleteUser: (userId) => `/Account/v1/User/${userId}/`,
   getInfoUser: (userId) => `/Account/v1/User/${userId}/`,
   createBooks: '/BookStore/v1/Books/',
-  updateBook: (isbn) => `/BookStore/v1/Books/${isbn}/`,
+  updateBook: (fromIsbn) => `/BookStore/v1/Books/${fromIsbn}/`,
   getBook: (isbn) => `/BookStore/v1/Book/?ISBN=${isbn}`,
   getBooks: '/BookStore/v1/Books/',
   deleteBook: '/BookStore/v1/Book/',
