@@ -2,9 +2,39 @@ import supertest from 'supertest'
 import { API_URLS, BASE_HOST } from '../../src/constants/urls'
 
 export const books = {
+  async createBook(data, token) {
+    return await supertest(BASE_HOST)
+      .post(API_URLS.createBooks)
+      .set('Content-Type', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
+      .send(data)
+  },
+
+  async updateBook(fromIsbn, data, token) {
+    return await supertest(BASE_HOST)
+      .put(API_URLS.updateBook(fromIsbn))
+      .set('Content-Type', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
+      .send(data)
+  },
+
+  async getBook(isbn) {
+    return await supertest(BASE_HOST)
+      .get(API_URLS.getBook(isbn))
+      .set('Content-Type', 'application/json')
+  },
+
   async getBooks() {
     return await supertest(BASE_HOST)
       .get(API_URLS.getBooks)
       .set('Content-Type', 'application/json')
+  },
+
+  async deleteBook(data, token) {
+    return await supertest(BASE_HOST)
+      .delete(API_URLS.deleteBook)
+      .set('Content-Type', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
+      .send(data)
   }
 }
