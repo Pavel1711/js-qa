@@ -1,10 +1,13 @@
 module.exports = {
+  parser: '@typescript-eslint/parser',
+  plugins: ['@typescript-eslint'],
+  root: true,
   env: {
     es2021: true,
     node: true,
     'jest/globals': true,
   },
-  extends: ['standard', 'prettier'],
+  extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'prettier'],
   overrides: [
     {
       env: {
@@ -16,7 +19,7 @@ module.exports = {
       },
     },
     {
-      files: ['tests/**/*.test.js'],
+      files: ['specs/*.test.ts', 'framework/**/*.ts'],
       plugins: ['jest'],
       extends: ['plugin:jest/recommended'],
       env: {
@@ -24,9 +27,4 @@ module.exports = {
       },
     },
   ],
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-  },
-  rules: {},
 }
