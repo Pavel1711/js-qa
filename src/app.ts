@@ -14,7 +14,8 @@ export const nameIsValid = name =>
  * @returns {string}
  */
 
-export const fullTrim = text => (text || '').replace(/\s/g, '')
+export const fullTrim = (text: string | null | undefined | false) =>
+  (text || '').replace(/\s/g, '')
 
 /**
  * Подсчёт суммы заказа

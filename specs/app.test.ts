@@ -28,7 +28,7 @@ describe('check fullTrim function', () => {
   it.each([[], true, {}])('fullTrim(%s) = Error', val => {
     expect(() => {
       fullTrim(val)
-    }).toThrow('text.replace is not a function')
+    }).toThrow('(text || "").replace is not a function')
   })
 })
 
