@@ -55,7 +55,7 @@ jobs:
       - run: echo "${{secrets.ENV_FILE}}" >> .env
       - run: npm test
       - name: Setup Pages
-        uses: actions/configure-page@v4
+        uses: actions/configure-pages@v4
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
