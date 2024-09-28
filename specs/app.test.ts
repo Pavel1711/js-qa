@@ -1,12 +1,15 @@
-import { nameIsValid, fullTrim, getTotal } from '../src/app';
+import { nameIsValid, fullTrim, getTotal } from '../src/app'
 
 describe('check nameIsValid function', () => {
   it('imported without error', () => {
     expect(typeof nameIsValid).toBe('function')
   })
-  it.each([null, undefined, false, {}, 'q', 'qa!', 'qa1', 'qa+', 'qa{}'])('nameIsValid(%s) = false', (val) => {
-    expect(nameIsValid(val)).toBe(false)
-  })
+  it.each([null, undefined, false, {}, 'q', 'qa!', 'qa1', 'qa+', 'qa{}'])(
+    'nameIsValid(%s) = false',
+    val => {
+      expect(nameIsValid(val)).toBe(false)
+    },
+  )
   it('check corrected name', () => {
     expect(nameIsValid('qa')).toBe(true)
   })
@@ -16,13 +19,13 @@ describe('check fullTrim function', () => {
   it('imported without error', () => {
     expect(typeof fullTrim).toBe('function')
   })
-  it.each([null, undefined, false])('fullTrim(%s) = ""', (val) => {
+  it.each([null, undefined, false])('fullTrim(%s) = ""', val => {
     expect(fullTrim(val)).toBe('')
   })
-  it.each(['checkstring', 'check string'])('fullTrim(%s) = ""', (val) => {
+  it.each(['checkstring', 'check string'])('fullTrim(%s) = ""', val => {
     expect(fullTrim(val)).toBe('checkstring')
   })
-  it.each([[], true, {}])('fullTrim(%s) = Error', (val) => {
+  it.each([[], true, {}])('fullTrim(%s) = Error', val => {
     expect(() => {
       fullTrim(val)
     }).toThrow('text.replace is not a function')
@@ -34,10 +37,10 @@ describe('check getTotal function', () => {
     expect(typeof getTotal).toBe('function')
   })
 
-  it.each([null, true, false, {}, ''])('getTotal(%s) = Error', (val) => {
+  it.each([null, true, false, {}, ''])('getTotal(%s) = Error', val => {
     expect(() => {
       getTotal([], val)
-    }).toThrow("Скидка должна быть числом")
+    }).toThrow('Скидка должна быть числом')
   })
 
   const testCasesPositive = [
@@ -48,7 +51,7 @@ describe('check getTotal function', () => {
         { name: 'Товар2', quantity: 5, price: 5 },
       ],
       discount: 10,
-      expected: 49.5
+      expected: 49.5,
     },
     {
       name: 'case 2: discount is 0',
@@ -57,13 +60,13 @@ describe('check getTotal function', () => {
         { name: 'Товар2', quantity: 5, price: 4 },
       ],
       discount: 0,
-      expected: 50
+      expected: 50,
     },
   ]
 
   test.each(testCasesPositive)('%s', ({ products, discount, expected }) => {
-    const result = getTotal(products, discount);
-    expect(result).toBeCloseTo(expected, 2);
+    const result = getTotal(products, discount)
+    expect(result).toBeCloseTo(expected, 2)
   })
 
   const testCasesNegative = [
@@ -87,10 +90,7 @@ describe('check getTotal function', () => {
     },
   ]
 
-  test.each(testCasesNegative)(
-    '%s',
-    ({ products, discount, expected }) => {
-      expect(() => getTotal(products, discount)).toThrow(expected)
-    },
-  )
+  test.each(testCasesNegative)('%s', ({ products, discount, expected }) => {
+    expect(() => getTotal(products, discount)).toThrow(expected)
+  })
 })

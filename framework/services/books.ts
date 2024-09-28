@@ -36,5 +36,5 @@ export const books = {
       .set('Content-Type', 'application/json')
       .set('Authorization', `Bearer ${token}`)
       .send(data)
-  }
+  },
 }

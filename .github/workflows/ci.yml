@@ -1,6 +1,17 @@
 name: CI
 
-on: [push, pull_request]
+on:
+  push:
+  workflow_dispatch:
+
+concurrency:
+  group: 'pages'
+  cancel-in-progress: false
+
+permissions:
+  # contents: read
+  pages: write
+  id-token: write
 
 jobs:
   eslint:
@@ -10,7 +21,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 20.11.0
+          node-version: 20.16.0
           cache: 'npm'
       - run: npm ci
       - run: npm run lint:ci
@@ -22,7 +33,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 20.11.0
+          node-version: 20.16.0
           cache: 'npm'
       - run: npm ci
       - run: npm run format:ci
@@ -30,11 +41,25 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 20.11.0
+          node-version: 20.16.0
           cache: 'npm'
       - run: npm ci
+      - run: echo "${{secrets.ENV_FILE}}" >> .env
       - run: npm test
+      - name: Setup Pages
+        uses: actions/configure-page@v4
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: 'reports/html-report'
+      - name: Deploy to Github Pages
+        id: deployment
+        uses: actions/deploy-page@v4

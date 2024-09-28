@@ -34,5 +34,5 @@ export const user = {
     return await supertest(BASE_HOST)
       .get(API_URLS.getInfoUser(userId))
       .set('Authorization', `Bearer ${token}`)
-  }
+  },
 }

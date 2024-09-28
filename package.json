@@ -13,9 +13,12 @@
     "codestyle": "run-s lint format",
     "build": "babel src --out-dir build --source-maps inline",
     "test": "jest --verbose",
-    "coverage": "jest --coverage"
+    "coverage": "jest --coverage",
+    "allure": "allure serve allure-result",
+    "allure:ci": "allure generate allure-result --clean",
+    "allure:ci:show": "allure open allure-result"
   },
-  "author": "Damir Rysaev <freepad@ya.ru>",
+  "author": "Pavel Kochura",
   "keywords": [],
   "license": "ISC",
   "devDependencies": {
@@ -43,5 +46,8 @@
     "supertest": "^7.0.0",
     "typescript": "^5.5.4",
     "typescript-eslint": "^8.2.0"
+  },
+  "dependencies": {
+    "allure": "^0.0.0"
   }
 }
