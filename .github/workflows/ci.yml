@@ -62,4 +62,4 @@ jobs:
           path: 'reports/html-report'
       - name: Deploy to Github Pages
         id: deployment
-        uses: actions/deploy-page@v4
+        uses: actions/deploy-pages@v4
